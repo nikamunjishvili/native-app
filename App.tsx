@@ -6,13 +6,15 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import { StyleSheet} from 'react-native';
+import DashboardTabRoutes from './src/navigations/dashboard/DashboardTabRoutes';
+import { NavigationContainer } from '@react-navigation/native';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Hello From React Native App!!</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+    <DashboardTabRoutes />
+  </NavigationContainer>
   );
 }
 
