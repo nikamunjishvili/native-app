@@ -1,19 +1,25 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {colors} from '../../themes';
+import IconComponent from '../_atoms/icons';
+import { Icon } from '../_atoms';
+import { RegisterForm } from '../_organisms';
+import { useNavigation } from '@react-navigation/native';
 
 const WelcomeLayout = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.buttonsWrapper}>
         <TouchableOpacity onPress={() => console.log('loginStepOne')}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('userTypesChooser')}>
+        <TouchableOpacity onPress={() => navigation.navigate("registration")}>
           <Text style={styles.buttonText}> Register</Text>
         </TouchableOpacity>
       </View>
     </View>
+  
   );
 };
 
