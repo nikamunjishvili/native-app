@@ -1,5 +1,8 @@
 import ChechIcon from './checkIcon';
 import LeftIcon from './LeftAngel';
+import Facebook from './Facebook';
+import Google from './Google';
+import Apple from './Apple';
 
 export type iconsName = 'checkIcon';
 
@@ -20,6 +23,20 @@ function IconComponent({iconName, color, width, height}: IconsProps) {
     }
     case 'leftAngel': {
       Icon = LeftIcon;
+      break;
+    }
+
+    case 'facebook': {
+      Icon = Facebook;
+      break;
+    }
+
+    case 'google': {
+      Icon = Google;
+      break;
+    }
+    case 'apple': {
+      Icon = Apple;
       break;
     }
 

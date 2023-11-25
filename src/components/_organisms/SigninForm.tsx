@@ -7,22 +7,25 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import TermsAndConditions from './TermsModal';
 import {Button, InputFiels} from '../_molecules';
 import {Icon} from '../_atoms';
 import {useNavigation} from '@react-navigation/native';
 
-const CompanyRegisterForm = () => {
+const SigninForm = () => {
   // const navigation = useNavigation<OnBoardingNavigationProp<"registration">>();
   const navigation = useNavigation();
   const [isRulesAccepted, setIsRulesAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const schema = yup
     .object({
+      FirstName: yup.string().required(),
+      LastName: yup.string().required(),
       Email: yup.string().required(),
       Password: yup.string().required(),
     })
@@ -59,7 +62,7 @@ const CompanyRegisterForm = () => {
             alignItems: 'center',
             marginTop: 50,
           }}>
-          <Text style={styles.headingLogo}>Create Account</Text>
+          <Text style={styles.headingLogo}>Login here</Text>
           <Text
             style={{
               fontSize: 14,
@@ -68,24 +71,10 @@ const CompanyRegisterForm = () => {
               textAlign: 'center',
               marginTop: 10,
             }}>
-            Create an account so you can explore all the existing jobs
+            Welcome back you’ve been missed!
           </Text>
         </View>
         <View style={styles.container}>
-          <InputFiels
-            placeholder="FirstName"
-            name="FirstName"
-            control={control}
-            required
-            containerStyle={styles.inputContainerStyle}
-          />
-          <InputFiels
-            placeholder="LastName"
-            name="LastName"
-            control={control}
-            required
-            containerStyle={styles.inputContainerStyle}
-          />
           <InputFiels
             placeholder="Email"
             name="Email"
@@ -100,24 +89,34 @@ const CompanyRegisterForm = () => {
             required
             containerStyle={styles.inputContainerStyle}
           />
+          <Text
+            style={{
+              color: '#1F41BB',
+              fontWeight: 'bold',
+              textAlign: 'right',
+            }}>
+            Forgot your password?
+          </Text>
+          <View style={{height: 20}} />
           <Button
             variant="next"
-            text="Sign up"
+            text="Sign in"
             isLoading={isLoading}
             onPress={handleSubmit(onSubmit)}
           />
-          <View style={{padding: 20}}>
-            <TouchableOpacity onPress={() => navigation.navigate('signin')}>
-              <Text
-                style={{
-                  color: '#494949',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}>
-                Already have an account
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('registration')}
+            style={{padding: 20}}>
+            <Text
+              style={{
+                color: '#494949',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}>
+              Create new account
+            </Text>
+          </TouchableOpacity>
+
           <View style={{padding: 20}}>
             <Text
               style={{
@@ -181,7 +180,7 @@ const CompanyRegisterForm = () => {
   );
 };
 
-export default CompanyRegisterForm;
+export default SigninForm;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
