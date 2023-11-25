@@ -2,6 +2,7 @@ import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AuthContentLayout from "./AuthContentLayout";
 import { RegisterForm } from "../_organisms";
+import { AuthBackground } from "../_molecules";
 
 const RegistrationLayout = () => {
 	return (
@@ -9,8 +10,9 @@ const RegistrationLayout = () => {
 			style={styles.container}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+            <AuthBackground />
 
-			<AuthContentLayout title="registration" height="85%">
+			<AuthContentLayout title="registration" >
 				<RegisterForm />
 			</AuthContentLayout>
 		</KeyboardAvoidingView>

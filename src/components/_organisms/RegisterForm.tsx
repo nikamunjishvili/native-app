@@ -46,7 +46,7 @@ const CompanyRegisterForm = () => {
   return (
     <KeyboardAvoidingView
       style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : null}
+      behavior={Platform.OS === 'ios' ? 'padding' : "height"}
       keyboardVerticalOffset={Platform.select({ios: 10, android: 100})}>
       <View style={styles.container}>
         <ScrollView style={styles.contentWrapper}>

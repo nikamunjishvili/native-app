@@ -1,25 +1,32 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View, ImageBackground} from 'react-native';
 import React from 'react';
-import {colors} from '../../themes';
-import IconComponent from '../_atoms/icons';
-import { Icon } from '../_atoms';
-import { RegisterForm } from '../_organisms';
-import { useNavigation } from '@react-navigation/native';
+import {colors, typography} from '../../themes';
+import {useNavigation} from '@react-navigation/native';
+import {Button} from '../_molecules';
 
 const WelcomeLayout = () => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View style={styles.buttonsWrapper}>
-        <TouchableOpacity onPress={() => console.log('loginStepOne')}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("registration")}>
-          <Text style={styles.buttonText}> Register</Text>
-        </TouchableOpacity>
+    <ImageBackground
+      source={require('../../assets/social_media_.jpg')}
+      style={styles.imageBackground}>
+      <View style={styles.container}>
+        <View style={styles.buttonsWrapper}>
+          <Button
+            text="Login"
+            variant="primary"
+            containerStyle={styles.buttonText}
+            onPress={() => console.log('loginStepOne')}
+          />
+          <Button
+            text="Register"
+            variant="primary"
+            containerStyle={styles.buttonText}
+            onPress={() => navigation.navigate('registration')}
+          />
+        </View>
       </View>
-    </View>
-  
+    </ImageBackground>
   );
 };
 
@@ -31,9 +38,12 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     paddingHorizontal: 24,
-    justifyContent: 'center',backgroundColor: colors.bgGray
+    justifyContent: 'center',
   },
-
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
   logoWrapper: {
     alignItems: 'center',
     gap: 20,
@@ -45,12 +55,12 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: colors.white,
-    fontSize: 16,
+    fontSize: typography.sizes['5xl'],
     fontWeight: '500',
-    paddingVertical: 10,
+    paddingVertical: 5,
     backgroundColor: colors.blue,
     borderRadius: 10,
-    marginVertical: 5,
+    marginVertical: 10,
     width: 250,
     textAlign: 'center',
   },
@@ -62,5 +72,4 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-
 });
