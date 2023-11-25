@@ -5,9 +5,11 @@ import {
 
 import {WelcomeScreen} from '../../screens';
 import RegistrationLayout from '../../components/layouts/RegistrationLayout';
+import SigninLayout from '../../components/layouts/SigninLayout';
 
 type RootStackParamList = {
-  registration: {selectedUserKey: string};
+  registration: {title: string};
+  signin: {title: string};
   welcome: undefined;
 };
 
@@ -19,6 +21,7 @@ function OnBoardingRoutes() {
       initialRouteName={'welcome'}
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={'welcome'} component={WelcomeScreen} />
+      <Stack.Screen name={'signin'} component={SigninLayout} />
       <Stack.Screen name={'registration'} component={RegistrationLayout} />
     </Stack.Navigator>
   );

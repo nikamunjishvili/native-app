@@ -16,7 +16,7 @@ const WelcomeLayout = () => {
             text="Login"
             variant="primary"
             containerStyle={styles.buttonText}
-            onPress={() => console.log('loginStepOne')}
+            onPress={() => navigation.navigate('signin')}
           />
           <Button
             text="Register"
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes['5xl'],
     fontWeight: '500',
     paddingVertical: 5,
-    backgroundColor: colors.blue,
+    backgroundColor: '#1F41BB',
+    boxShadow: "0px 10px 20px 0px #CBD6FF",
     borderRadius: 10,
     marginVertical: 10,
     width: 250,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
 
   textUnderLogo: {
-    color: colors.main,
+    color: '#1F41BB',
   },
   bgImage: {
     width: '100%',
