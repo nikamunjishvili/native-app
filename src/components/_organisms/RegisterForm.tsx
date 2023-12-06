@@ -19,12 +19,13 @@ import {useNavigation} from '@react-navigation/native';
 const CompanyRegisterForm = () => {
   // const navigation = useNavigation<OnBoardingNavigationProp<"registration">>();
   const navigation = useNavigation();
-  const [isRulesAccepted, setIsRulesAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const schema = yup
     .object({
-      Email: yup.string().required(),
-      Password: yup.string().required(),
+        FirstName: yup.string().required(),
+        LastName: yup.string().required(),
+        Email: yup.string().required(),
+        Password: yup.string().required(),
     })
     .required();
   type FormDataType = yup.InferType<typeof schema>;
