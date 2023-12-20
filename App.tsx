@@ -5,19 +5,23 @@
  * @format
  */
 
-import React from 'react';
-import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
-import store from './src/store/store/index';
+import store, {persistor} from './src/store/store/index';
 import AppProviderLayout from './src/components/layouts/AppProviderLayout';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Loader} from './src/components';
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {/* <DashboardTabRoutes /> */}
-        <AppProviderLayout />
+        <PersistGate
+          persistor={persistor}
+          // loading={<Loader loadingText="Loading, please wait..." />}
+        >
+          <AppProviderLayout />
+        </PersistGate>
       </NavigationContainer>
     </Provider>
   );

@@ -27,7 +27,7 @@ interface PropsTypes {
   control?: any;
   value?: string;
   defaultValue?: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 const InputField = ({
@@ -54,7 +54,7 @@ const InputField = ({
 
   switch (variant) {
     case 'name': {
-      labelText = 'name';
+      labelText = 'სახელი';
       break;
     }
     case 'email': {
@@ -63,7 +63,7 @@ const InputField = ({
       break;
     }
     case 'password': {
-      labelText = 'password';
+      labelText = 'პაროლი';
       break;
     }
     case 'phone': {

@@ -7,18 +7,16 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import TermsAndConditions from './TermsModal';
 import {Button, InputFiels} from '../_molecules';
 import {Icon} from '../_atoms';
 import {useNavigation} from '@react-navigation/native';
 
 const SigninForm = () => {
-  // const navigation = useNavigation<OnBoardingNavigationProp<"registration">>();
   const navigation = useNavigation();
   const [isRulesAccepted, setIsRulesAccepted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
