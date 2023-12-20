@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
-import { useState} from 'react';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -15,17 +16,21 @@ import * as yup from 'yup';
 import {Button, InputFiels} from '../_molecules';
 import {Icon} from '../_atoms';
 import {useNavigation} from '@react-navigation/native';
+import {useRegisterUserMutation} from '../../services';
+import {useAppSelector, useAppDispatch} from '../../store/store/hooks/hooks';
+import {updateOnboard} from '../../store/slices';
 
 const CompanyRegisterForm = () => {
-  // const navigation = useNavigation<OnBoardingNavigationProp<"registration">>();
+  const [registerUser] = useRegisterUserMutation();
+  const {token, user} = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const schema = yup
     .object({
-        FirstName: yup.string().required(),
-        LastName: yup.string().required(),
-        Email: yup.string().required(),
-        Password: yup.string().required(),
+      userName: yup.string().required(),
+      Email: yup.string().required(),
+      Password: yup.string().required(),
     })
     .required();
   type FormDataType = yup.InferType<typeof schema>;
@@ -38,8 +43,36 @@ const CompanyRegisterForm = () => {
 
   const onSubmit = (data: FormDataType) => {
     setIsLoading(true);
-    console.log('registration');
-    setIsLoading(false);
+    const formData = new FormData();
+    formData.append('name', data.userName);
+    formData.append('email', data.userName);
+    formData.append('password', data.userName);
+
+    registerUser(formData as never)
+      .unwrap()
+      .then(() => {
+        Alert.alert('User Registered successfully!!', '', [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (token) {
+                dispatch(updateOnboard({isOnboarded: false}));
+              }
+            },
+          },
+        ]);
+      })
+      .catch(err => Alert.alert('User Registered successfully!!',"", [
+        {
+          text: 'OK',
+          onPress: () => {
+            navigation.navigate("wellcome")
+          },
+        },
+      ]))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -74,29 +107,22 @@ const CompanyRegisterForm = () => {
         </View>
         <View style={styles.container}>
           <InputFiels
-            placeholder="FirstName"
-            name="FirstName"
+            variant="name"
+            name="userName"
             control={control}
             required
             containerStyle={styles.inputContainerStyle}
           />
           <InputFiels
-            placeholder="LastName"
-            name="LastName"
-            control={control}
-            required
-            containerStyle={styles.inputContainerStyle}
-          />
-          <InputFiels
-            placeholder="Email"
+            variant="email"
             name="Email"
             control={control}
             required
             containerStyle={styles.inputContainerStyle}
           />
           <InputFiels
-            placeholder="Password"
             name="Password"
+            variant="password"
             control={control}
             required
             containerStyle={styles.inputContainerStyle}

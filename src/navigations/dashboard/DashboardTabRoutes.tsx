@@ -3,21 +3,20 @@ import {View, Text, StyleSheet} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {colors} from '../../themes';
-import {HomeScreen} from '../../screens';
+import HomeRoutes from '../home/HomeRoutes';
+import {Icon} from '../../components/_atoms';
+import {iconsName} from '../../components/_atoms/icons';
+import ProfileScreen from '../../screens/profile/ProfileScreen';
 
 export type RootDashboardTabParamList = {
-  homeRoutes: undefined;
-  map: {title: string};
-  file: {title: string};
-  filter: {title: string};
-  chatRoutes: {title: string};
+  homeRoutes: {title: string};
+  chat: {title: string};
   bell: {title: string};
-  userRoutes: undefined;
+  Profile: {title: string};
 };
 
 function TestScreen({route}: {route: any}) {
   return (
-    // eslint-disable-next-line react-native/no-inline-styles
     <View
       style={{
         flex: 1,
@@ -33,6 +32,23 @@ function TestScreen({route}: {route: any}) {
 const DashboardTabRoutes = () => {
   const Tab = createBottomTabNavigator<RootDashboardTabParamList>();
 
+  const getIconNameForTabs = (name: string) => {
+    switch (name) {
+      case 'homeRoutes': {
+        return 'home';
+      }
+      case 'chat': {
+        return 'chat';
+      }
+      case 'Profile': {
+        return 'user';
+      }
+      default: {
+        return name;
+      }
+    }
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="homeRoutes"
@@ -42,17 +58,32 @@ const DashboardTabRoutes = () => {
         tabBarStyle: {
           backgroundColor: colors.bgGray,
         },
-        // tabBarIcon: () => {
-        //     return (
-        //         // <Icon iconName={getIconNameForTabs(name) as iconsName} color={focused ? colors.main : ""} />
-        //     );
-        // },
+        tabBarIcon: ({focused}) => {
+          return (
+            <Icon
+              iconName={getIconNameForTabs(name) as iconsName}
+              color={focused ? colors.main : ''}
+              width={32}
+              height={32}
+            />
+          );
+        },
       })}>
-      <Tab.Screen name={'homeRoutes'} component={HomeScreen} />
-      <Tab.Screen name={'map'} component={TestScreen} initialParams={{ title: "map" }} />
-      <Tab.Screen name={'file'} component={TestScreen} initialParams={{ title: "file" }} />
-      <Tab.Screen name={'filter'} component={TestScreen}  initialParams={{ title: "filter" }} />
-      <Tab.Screen name={'chatRoutes'} component={TestScreen} initialParams={{ title: "chatRoutes" }} />
+      <Tab.Screen
+        name={'homeRoutes'}
+        component={HomeRoutes}
+        initialParams={{title: 'homeRoutes'}}
+      />
+      <Tab.Screen
+        name={'chat'}
+        component={TestScreen}
+        initialParams={{title: 'chatRoutes'}}
+      />
+      <Tab.Screen
+        name={'Profile'}
+        component={ProfileScreen}
+        initialParams={{title: 'Profile'}}
+      />
     </Tab.Navigator>
   );
 };
