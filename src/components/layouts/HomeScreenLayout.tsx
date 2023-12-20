@@ -17,15 +17,16 @@ const HomeScreenLayout = () => {
   const [description, setDescription] = useState('');
   const [data, setData] = useState<any>([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
 
-  const handleCardClick = post => {
+  const handleCardClick = (post: any) => {
     setSelectedPost(post);
     setModalVisible(true);
   };
 
   const handleAddInputValue = () => {
     const newPost = {
+      date: new Date().toString(),
       title: title,
       body: description,
     };
@@ -74,11 +75,16 @@ const HomeScreenLayout = () => {
       <FlatList
         data={data}
         renderItem={({item}) => (
-          <TouchableOpacity onPress={() => handleCardClick(item)}>
-            <CardItem title={item.title} body={item.body} />
+          <TouchableOpacity onPress={() => handleCardClick(item)} key={item.id}>
+            <CardItem
+              date={item.date}
+              title={item.title}
+              body={item.body}
+              created={item.created}
+            />
           </TouchableOpacity>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.toString()}
       />
       <Modal
         animationType="slide"
@@ -89,6 +95,7 @@ const HomeScreenLayout = () => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <Text style={{color: 'red'}}>{selectedPost?.date}</Text>
             <Text style={styles.modalTitle}>{selectedPost?.title}</Text>
             <Text style={styles.modalBody}>{selectedPost?.body}</Text>
             <TouchableOpacity
