@@ -8,36 +8,49 @@ import {
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {colors} from '../../themes';
 import CardItem from '../_molecules/Card';
+import {useNavigation} from '@react-navigation/native';
 
-const HomeScreenLayout = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [data, setData] = useState<any>([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<any>(null);
+interface DataType {
+  id: number;
+  title: string;
+  body: string;
+  created: string;
+}
+interface HomeLayoutType {
+  title: string;
+  setTitle: any;
+  description: string;
+  setDescription: any;
+  data: DataType[] | any;
+  setData: any;
+  modalVisible: boolean;
+  setModalVisible: any;
+  selectedPost: null;
+  handleCardClick: any;
+  handleAddInputValue: any;
+}
 
-  const handleCardClick = (post: any) => {
-    setSelectedPost(post);
-    setModalVisible(true);
-  };
-
-  const handleAddInputValue = () => {
-    const newPost = {
-      date: new Date().toString(),
-      title: title,
-      body: description,
-    };
-    setData([...data, newPost]);
-    setTitle('');
-    setDescription('');
-  };
+const HomeScreenLayout = ({
+  title,
+  setTitle,
+  description,
+  setDescription,
+  data,
+  setData,
+  modalVisible,
+  setModalVisible,
+  selectedPost,
+  handleCardClick,
+  handleAddInputValue,
+}: HomeLayoutType) => {
+  const navigation = useNavigation();
 
   useEffect(() => {
     const dataRequest = async () => {
-      await fetch('http://localhost:3200/api/posts')
+      await fetch(`http://localhost:3200/api/posts`)
         .then(res => res.json())
         .then(data => setData(data));
     };
@@ -47,6 +60,14 @@ const HomeScreenLayout = () => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{alignItems: 'center'}}>
+        <Text
+          onPress={() => {
+            navigation.navigate('post', {
+              data: data,
+            });
+          }}>
+          go to the screen
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={setTitle}
@@ -81,11 +102,15 @@ const HomeScreenLayout = () => {
               title={item.title}
               body={item.body}
               created={item.created}
+              imageUrl={item.imageUrl}
             />
           </TouchableOpacity>
         )}
-        keyExtractor={item => item.toString()}
+        keyExtractor={item =>
+          item.id ? item.id.toString() : Math.random().toString()
+        }
       />
+
       <Modal
         animationType="slide"
         transparent={true}

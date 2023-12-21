@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
 interface Props {
@@ -6,12 +6,14 @@ interface Props {
   body: string;
   date: string;
   created: string;
+  imageUrl: string;
 }
 
-const CardItem = ({title, body, date, created}: Props) => {
+const CardItem = ({title, body, date, created, imageUrl}: Props) => {
   return (
     <View style={{margin: 20}}>
       <View style={styles.card}>
+        <Image source={{uri: imageUrl}} style={styles.image} />
         <Text style={styles.body}>{created}</Text>
         <Text style={styles.title}>{date}</Text>
         <Text style={styles.title}>{title}</Text>
@@ -38,6 +40,11 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     padding: 20,
+  },
+  image: {
+    width: 50,
+    borderRadius: 50,
+    height: 50,
   },
   title: {
     fontSize: 15,

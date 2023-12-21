@@ -4,11 +4,11 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { HomeScreen } from '../../screens';
+import PostDataScreen from '../../screens/post/PostDataScreen';
 
 export type HomeStackParamList = {
   home: {title: string};
-  freeModal: {title: string};
-  calendarModal: {title: string};
+  post: {title: string};
 };
 
 const HomeRoutes = () => {
@@ -20,6 +20,7 @@ const HomeRoutes = () => {
         headerShown: false,
       }}>
       <stack.Screen name="home" component={HomeScreen} />
+      <stack.Screen name="post" component={PostDataScreen} />
     </stack.Navigator>
   );
 };
